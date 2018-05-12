@@ -1,0 +1,57 @@
+
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+
+.GreenRotate{
+  background-color: lightgreen !important; 
+  transform: rotate(45deg);
+  text-align: center;
+ }
+
+ .PinkRotate{
+  background-color: pink;
+  transform: rotate(-20deg);
+  text-align: center;
+ }
+
+ .RedRotate{
+  background-color: red;
+  transform: rotate(20deg);
+  text-align: center;
+ }
+ .BasicBeige{
+  background-color: beige;
+  font-weight: bold;
+ }
+ 
+ .BackgroundBlue{
+  background-color: lightblue;
+ }
+ .BackgroundYellow{
+  background-color: yellow;
+ }
+
+ .Gradient1{
+  background: linear-gradient(to bottom, #ebf1f6 0%,#abd3ee 36%,#89c3eb 75%,#d5ebfb 100%); 
+ }
+
+ .Gradient2{
+  background: linear-gradient(to bottom, #f0b7a1 0%,#752201 62%,#752201 62%,#8c3310 65%,#8c3310 65%,#bf6e4e 100%); 
+ }
+
+ body{
+  font-family: 'Open Sans', sans-serif;
+  font-size: 12px;
+ }
+
+ .testHeaderCell{background-color:pink;}
+ .testCell{background-color:lightblue;}
+ .testCellOddRow{background-color:linen;}
+ .testRowHeaderCell{background-color:yellow;}
+
+ .testHeaderData{background-color:cornsilk;transform: rotate(-20deg);text-align:center;}
+ .testData{background-color:lightgreen;transform: rotate(20deg);text-align:center;}              
+ .testDataOddRow{background-color:slateblue;}
+ .testRowHeaderData{background-color:plum;}
+
+ .testInput{background-color:aqua;}
+ .testSelected{background-color:silver;}
