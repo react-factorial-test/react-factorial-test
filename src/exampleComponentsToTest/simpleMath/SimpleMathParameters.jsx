@@ -37,8 +37,8 @@ const testData=
   CTest: {
     CNormalTest:{
       c0Test: { c: 0, _rft:'0 is falsey.  make sure 0 renders but that null does not get renderd' },
-      c1Test: { c: 5, _rft:'normal test value' },
-      c73Test: { c: 5.5, _rft:'make sure non-integers work' },
+      c5Test: { c: 5, _rft:'normal test value' },
+      c55Test: { c: 5.5, _rft:'make sure non-integers work' },
     },
     CEvilTest:{
       cNULLTest: { c: null, _rft:'this is the null value. simulates the property not being set' },

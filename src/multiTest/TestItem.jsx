@@ -141,6 +141,7 @@ export default class TestItem extends React.Component {
       var display = Object.assign({},this.props.item);
       delete display.tstName;
       delete display['_rft'];
+      delete display['id'];
 
       // final rendering of the target with each multiplied parameter set
       return(
