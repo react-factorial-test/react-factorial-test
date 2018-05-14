@@ -1,6 +1,6 @@
 {
   "name": "react-factorial-test",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "Generate component test buy using multiplication on parameter sets",
   "scripts": {
     "test": "jest",
@@ -30,7 +30,7 @@
   ],
   "author": "jason henriksen",
   "license": "MIT",
-  "main": "lib/MultiTest.jsx",
+  "main": "lib/bundle.js",
   "dependencies": {
     "@storybook/addon-options": "^3.4.3",
     "json-stable-stringify": "^1.0.1",
@@ -52,7 +52,7 @@
   "peerDependencies": {
     "react": "^16.3.2",
     "react-dom": "^16.3.2"
-  },  
+  },
   "devDependencies": {
     "@storybook/react": "^3.4.3",
     "babel-cli": "^6.10.1",

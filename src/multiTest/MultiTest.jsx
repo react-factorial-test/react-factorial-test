@@ -14,7 +14,6 @@ import CloseBox from 'mdi-react/CloseBoxIcon';
 import TestItem from './TestItem';
 
 
-
 // Given a set of parameters and rules for multiplying those objects togeter, generate 
 // TODO: PropTypes
 export default class MultiTest extends React.Component {
