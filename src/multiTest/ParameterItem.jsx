@@ -34,7 +34,7 @@ export default class ParameterItem extends React.Component {
             <ParameterItem data={this.props.data[curKey]}/>
           );
       }
-      else if(curKey!=='tstName'){
+      else if(curKey!=='tstName' && curKey!=='_rft'){
         results.push( <ParameterParts data={this.props.data}/> );
         break;
       }
@@ -45,7 +45,7 @@ export default class ParameterItem extends React.Component {
     if(this.props.data.tstName){
       return(
         <div style={{marginLeft:'15px'}}>
-          <div style={{lineHeight:'25px',verticalAlign:'middle',cursor:'pointer'}} onClick={this.toggleOpen} title='Click to open node.  Shift-Click to open/close all child nodes' >
+          <div style={{lineHeight:'25px',verticalAlign:'middle',cursor:'pointer'}} onClick={this.toggleOpen} title='Click to open node.' >
             <div style={{fontWeight:'bold',verticalAlign:'middle',minWidth:'150px',display:'inline-block'}}>&nbsp;&nbsp;{this.props.data.tstName}</div>
             <div style={{marginLeft:'5px',display:'inline-block'}}><i>{this.props.data["_rft"]}</i></div>
           </div>

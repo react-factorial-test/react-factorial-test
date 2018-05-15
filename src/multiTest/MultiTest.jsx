@@ -63,7 +63,7 @@ export default class MultiTest extends React.Component {
       if (curKey.endsWith('Test')){
         results = results.concat( this.getAllWork( workObj[curKey],curKey ));
       }
-      else if(curKey!=='tstName'){
+      else if(curKey!=='tstName' && curKey!=='_rft'){
         results.push( workObj );
         return results;
       }

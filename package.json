@@ -1,6 +1,6 @@
 {
   "name": "react-factorial-test",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "description": "Generate component test buy using multiplication on parameter sets",
   "scripts": {
     "test": "jest",
