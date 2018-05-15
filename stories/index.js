@@ -77,6 +77,7 @@ storiesOf('Example - SimpleMath Component', module)
   .add('Just A*B, but include evil data', () => (
     <MultiTest
       target={<SimpleMath/>}
+      smallMode={true}
       test={
         [ [ smData.ATest, smData.BTest 
         ]]}

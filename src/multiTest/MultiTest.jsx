@@ -11,6 +11,9 @@ import SelectNo from 'mdi-react/CheckboxBlankOutlineIcon';
 import SelectYes from 'mdi-react/CheckboxBlankIcon';
 import CloseBox from 'mdi-react/CloseBoxIcon';
 
+import GoBig from 'mdi-react/ArrowExpandAllIcon';
+import GoSmall from 'mdi-react/ArrowCollapseAllIcon';
+
 import TestItem from './TestItem';
 
 
@@ -40,7 +43,8 @@ export default class MultiTest extends React.Component {
     this.state = {
       filter: (localStorage.getItem("reactFactorialTest_filter") || ''),
                    showCompsOnly: false,
-                   showFlagsOnly: false
+                   showFlagsOnly: false,
+                   smallMode: this.props.smallMode
                  };
   }
 
@@ -107,6 +111,13 @@ export default class MultiTest extends React.Component {
     this.setState({ filter: filterVal, showCompsOnly: '', showFlagsOnly: ''});
   }
 
+  goSmall() {
+    this.setState({ smallMode: true });
+  }
+  goBig() {
+    this.setState({ smallMode: false });
+  }
+  
 
   // toggle wether the system is showing all tests or just the comparison tests.
   // save the information to a window variable so that it will survive reloading the page due the tested code being updated.
@@ -192,7 +203,7 @@ export default class MultiTest extends React.Component {
              -1 !== reactFactorialTest_flagList.indexOf(holdName))
          )          
       ){
-        return <TestItem key={index} index={index} item={item} target={this.props.target} 
+        return <TestItem key={index} index={index} item={item} target={this.props.target} smallMode={this.state.smallMode}
                   focusToggle={() => this.setFilter(holdName)}
                 />
       }
@@ -203,7 +214,7 @@ export default class MultiTest extends React.Component {
     var unFlagButton = '';
     if (reactFactorialTest_filter || reactFactorialTest_compsOnly || reactFactorialTest_flagsOnly ) {
       unFocusButton = 
-        <div style={{ display: 'inline-block', padding: '2px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+        <div style={{ display: 'inline-block', padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black' }}
           onClick={() => this.setFilter('')}
           title='UnFocus / Show All Tests'
         >
@@ -211,26 +222,49 @@ export default class MultiTest extends React.Component {
     }
     else{
       unCompareButton = 
-        <div style={{ display: 'inline-block', padding: '2px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+        <div style={{ display: 'inline-block', padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black' }}
           onClick={() => this.toggleCompVisible()} title='Focus On Comparison Tests'
         ><MagnifyIcon width={18} height={18} /><SelectYes width={18} height={18} /></div>      
       unFlagButton = 
-        <div style={{ display: 'inline-block', padding: '2px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+        <div style={{ display: 'inline-block', padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black' }}
           onClick={() => this.toggleFlagVisible()} title='Focus On Flagged Tests'
         ><MagnifyIcon width={18} height={18} /><FlagIcon width={18} height={18} /></div>
     }
+
+    var goBigButton = <div style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+      onClick={() => this.goBig()} title='Toggle: One Test Per Line'>
+      <GoBig width={18} height={18} />
+      </div>
+    var goSmallButton = <div style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+      onClick={() => this.goSmall()} title='Toggle: Compact Mode'>
+      <GoSmall width={18} height={18} />
+      </div>
+
+
+
+    if(this.state.smallMode){
+      return(
+        <div>
+          {goBigButton}&nbsp;
+          {allWork.length} Tests : mouse over each test for details.<br/>          
+          {renderList}          
+        </div>
+      );
+    }
+    
     
     return(
-      <div>
+      <div style={{height:'99%'}}>
         <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, borderBottom: '3px solid grey', padding: '5px'}}>
-          <div style={{ padding:'5px',fontSize: '2em' , width: '80%',display:'inline-block'  }}>{allWork.length} Tests Computed </div>
-          <div style={{ width: '18%', display: 'inline-block' }}>
+          <div style={{ padding:'5px',fontSize: '2em' , display:'inline-block'  }}>{allWork.length} Tests</div>
+          <div style={{ display: 'inline-block',float:'right' }}>
             {unFocusButton}&nbsp;
             {unFlagButton}&nbsp;
-            {unCompareButton}
+            {unCompareButton}&nbsp;
+            {goSmallButton}
           </div>
         </div>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 65, bottom: 0, overflow: 'auto',padding: '5px',  }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 65, bottom: 5, overflow: 'auto',padding: '5px',  }}>
           {renderList}
         </div>
       </div>

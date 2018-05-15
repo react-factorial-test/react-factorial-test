@@ -109,17 +109,17 @@ export default class TestItem extends React.Component {
       
       if (holdName !== reactFactorialTest_filter){
         // only show the focus button if everything is being rendered
-        focusButton =     <div  style={{ padding: '2px', backgroundColor: 'lightgreen', border: '1px solid black',width:20,display:'inline-block' }}
+        focusButton = <div style={{ padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black',width:20,display:'inline-block' }}
                             onClick={this.props.focusToggle}
                             title='Show only this test'
         ><MagnifyIcon width={18} height={18}/></div>
 
-        includeToggle = <div style={{ padding: '2px', backgroundColor: 'lightgreen', border: '1px solid black', width: 20, display: 'inline-block' }}
+        includeToggle = <div style={{ padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black', width: 20, display: 'inline-block' }}
                             onClick={() => this.toggleComp(holdName)}
                             title='Include test for comparisons'
         >{isInCompList ? <SelectYes width={18} height={18} /> : <SelectNo width={18} height={18}/>}</div>
 
-        flagToggle = <div style={{ padding: '2px', backgroundColor: isFlagged ? 'crimson' : 'lightgreen', border: '1px solid black', width: 20, display: 'inline-block' }}
+        flagToggle = <div style={{ padding: '2px', height: '18px',backgroundColor: isFlagged ? 'crimson' : 'lightgreen', border: '1px solid black', width: 20, display: 'inline-block' }}
                             onClick={() => this.toggleFlag(holdName)}
                             title='Flag test for review'
                           ><FlagIcon width={18} height={18}/></div>
@@ -143,16 +143,25 @@ export default class TestItem extends React.Component {
       delete display['_rft'];
       delete display['id'];
 
+      if(this.props.smallMode){
+        return (
+          <div key={this.props.index + 'item'} 
+                style={{ display: 'inline-block' }} title={holdName + '\n' + alphaStringify(display)}>
+            { this.props.item && React.cloneElement(this.props.target, this.props.item) }
+          </div>
+        );
+      }
+
       // final rendering of the target with each multiplied parameter set
       return(
       <div key={this.props.index+'item'}>
         <hr />          
-        <div>
-          <div style={{ width: '80%',display:'inline-block' }}>
+        <div style={{minHeight:'50px'}}>
+          <div style={{ display:'inline-block' }}>
             <div style={{ fontSize: '1.5em' }}>{holdName}</div>            
             {alphaStringify(display)}
           </div>
-          <div style={{ width: '20%',display:'inline-block',marginLeft:'auto',verticalAlign:'top'}}>
+          <div style={{ display:'inline-block',float:'right',verticalAlign:'top'}}>
               {focusButton}&nbsp;
               {flagToggle}&nbsp;
               {includeToggle}<br/>
