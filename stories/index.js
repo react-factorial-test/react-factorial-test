@@ -50,13 +50,15 @@ storiesOf('Example - SimpleMath Component', module)
                                             data={smData}
                                             />))
   .add('Show A Tests Only', () => (
-    <MultiTest
+    <MultiTest 
+      id='aOnly'
       target={<SimpleMath/>}
       test={
       [ [ smData.ATest.ANormalTest ] ]}
     />))
     .add('Show tests A, then B, then C.  Normal data only', () => (
       <MultiTest
+        id='abcPlus'
         target={<SimpleMath/>}
         test={
         [ [ smData.ATest.ANormalTest ], 
@@ -66,7 +68,8 @@ storiesOf('Example - SimpleMath Component', module)
       />))
     .add('A*B*C.  Normal data only', () => (
       <MultiTest
-        target={<SimpleMath/>}
+      id='abcMulti'
+      target={<SimpleMath/>}
         test={
           [ // three lines of definition, 40 tests generated.
             [// pivot tests by object array data, plus normal and wide versions
@@ -76,7 +79,8 @@ storiesOf('Example - SimpleMath Component', module)
       />))
   .add('Just A*B, but include evil data', () => (
     <MultiTest
-      target={<SimpleMath/>}
+    id='abMultiWithEvil'
+    target={<SimpleMath/>}
       smallMode={true}
       test={
         [ [ smData.ATest, smData.BTest 
@@ -84,6 +88,7 @@ storiesOf('Example - SimpleMath Component', module)
     />))
   .add('Show Only One Specific Test', () => (
     <MultiTest
+      id='specific'
       target={<SimpleMath/>}
       test={
         [ // three lines of definition, 40 tests generated.

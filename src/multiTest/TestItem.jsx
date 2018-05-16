@@ -17,13 +17,14 @@ export default class TestItem extends React.Component {
 
   constructor(props) {
     super(props); autoBind(this);        
+    this.id = '_'+(this.props.id||'');
     this.state = { pleaseReRender:0 };
   }
 
   // toggle wether a given test name is in the comparison list.
   // save the information to a window variable so that it will survive reloading the page due the tested code being updated.
   toggleComp(testName) {
-    var compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'))||[];
+    var compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'+this.id))||[];
     if (compList.indexOf(testName)===-1){
       // add it
       compList.push(testName)
@@ -35,7 +36,7 @@ export default class TestItem extends React.Component {
         compList.splice(i, 1);
       }    
     }
-    localStorage.setItem('reactFactorialTest_compList', JSON.stringify(compList));
+    localStorage.setItem('reactFactorialTest_compList'+this.id, JSON.stringify(compList));
     // real state is in local session.  This just tells react to wake up and render me again.
     this.setState({ pleaseReRender: this.state.pleaseReRender++ });
   }
@@ -43,7 +44,7 @@ export default class TestItem extends React.Component {
   // toggle wether a given test name is in the comparison list.
   // save the information to a window variable so that it will survive reloading the page due the tested code being updated.
   toggleFlag(testName) {
-    var flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList')) || [];
+    var flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList'+this.id)) || [];
     if (flagList.indexOf(testName) === -1) {      
       flagList.push(testName);// add it
     }
@@ -52,15 +53,15 @@ export default class TestItem extends React.Component {
       while ((i = flagList.indexOf(testName)) != -1) {
         flagList.splice(i, 1);// cut it
       }
-      localStorage.setItem('reactFactorialTest_note_' + testName, '');          
+      localStorage.setItem('reactFactorialTest_note_' + testName+this.id, '');          
     }
-    localStorage.setItem('reactFactorialTest_flagList', JSON.stringify(flagList));
+    localStorage.setItem('reactFactorialTest_flagList'+this.id, JSON.stringify(flagList));
     this.setState({ pleaseReRender: this.state.pleaseReRender++ });
   }  
 
   onTypeNote(evt){
     var holdName = this.props.item.tstName; 
-    localStorage.setItem('reactFactorialTest_note_' + holdName,evt.target.value);    
+    localStorage.setItem('reactFactorialTest_note_' + holdName+this.id,evt.target.value);    
     this.setState({ pleaseReRender: this.state.pleaseReRender++ });
   }
   
@@ -71,13 +72,15 @@ export default class TestItem extends React.Component {
 
     // This is an inefficience by design.  If I pass this in from the parent, then the parent has to re-render when these change.
     // I don't want that, so I accept the cost that each test must do it's own local storage access. 
-    var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter') || '';
-    var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly') || ''; // empty string implies false.
-    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList')) || [];
-    var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly') || '';
-    var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList')) || [];    
+    var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter'+this.id) || '';
+    var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly'+this.id) || ''; // empty string implies false.
+    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'+this.id)) || [];
+    var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly'+this.id) || '';
+    var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList'+this.id)) || [];    
 
-    var reactFactorialTest_note = localStorage.getItem('reactFactorialTest_note_'+holdName) || '';    
+    var reactFactorialTest_note = localStorage.getItem('reactFactorialTest_note_'+holdName+this.id) || '';    
+    var reactFactorialTest_smallMode = localStorage.getItem('reactFactorialTest_smallMode'+this.id) || this.props.smallMode || '';    
+    
 
     if (
       // if there's no filter or this test matches a filter, include it.
@@ -143,10 +146,13 @@ export default class TestItem extends React.Component {
       delete display['_rft'];
       delete display['id'];
 
-      if(this.props.smallMode){
+      if(reactFactorialTest_smallMode){
         return (
           <div key={this.props.index + 'item'} 
                 style={{ display: 'inline-block' }} title={holdName + '\n' + alphaStringify(display)}>
+                <div title='click here to toggle flagged status' style={{fontSize:'.75em',color:'red',cursor:'pointer'}}
+                  onClick={() => this.toggleFlag(holdName)}
+                >&nbsp;{isFlagged && 'flagged'}</div>
             { this.props.item && React.cloneElement(this.props.target, this.props.item) }
           </div>
         );
@@ -154,8 +160,7 @@ export default class TestItem extends React.Component {
 
       // final rendering of the target with each multiplied parameter set
       return(
-      <div key={this.props.index+'item'}>
-        <hr />          
+      <div key={this.props.index+'item'} style={{borderBottom:'1px solid lightgrey',margin:'5px',paddingBottom:'5px'}}>
         <div style={{minHeight:'50px'}}>
           <div style={{ display:'inline-block' }}>
             <div style={{ fontSize: '1.5em' }}>{holdName}</div>            

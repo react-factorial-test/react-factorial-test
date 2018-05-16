@@ -10,6 +10,7 @@ import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import SelectNo from 'mdi-react/CheckboxBlankOutlineIcon';
 import SelectYes from 'mdi-react/CheckboxBlankIcon';
 import CloseBox from 'mdi-react/CloseBoxIcon';
+import UnFilter from 'mdi-react/BookmarkRemoveIcon';
 
 import GoBig from 'mdi-react/ArrowExpandAllIcon';
 import GoSmall from 'mdi-react/ArrowCollapseAllIcon';
@@ -23,29 +24,32 @@ export default class MultiTest extends React.Component {
 
   constructor(props) {
     super(props); autoBind(this);        
+    this.id = '_'+(this.props.id||'');
     
     try {
       // clear any bad data
-      var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter') || '';  // empty string implies false.
-      var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly') || ''; 
-      var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList')) || [];
-      var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly') || '';
-      var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList')) || [];    
+      var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter'+this.id) || '';  // empty string implies false.
+      var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly'+this.id) || ''; 
+      var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'+this.id)) || [];
+      var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly'+this.id) || '';
+      var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList'+this.id)) || [];    
+      var reactFactorialTest_smallMode = localStorage.getItem('reactFactorialTest_smallMode'+this.id) || '';  // empty string implies false.
     } catch (e) {
-      localStorage.removeItem('reactFactorialTest_filter');
-      localStorage.removeItem('reactFactorialTest_compsOnly');
-      localStorage.removeItem('reactFactorialTest_compList');
-      localStorage.removeItem('reactFactorialTest_flagsOnly');
-      localStorage.removeItem('reactFactorialTest_flagList');    
+      localStorage.removeItem('reactFactorialTest_filter'+this.id);
+      localStorage.removeItem('reactFactorialTest_compsOnly'+this.id);
+      localStorage.removeItem('reactFactorialTest_compList'+this.id);
+      localStorage.removeItem('reactFactorialTest_flagsOnly'+this.id);
+      localStorage.removeItem('reactFactorialTest_flagList'+this.id);
+      localStorage.removeItem('reactFactorialTest_smallMode'+this.id);
     }
     
     
     this.state = {
-      filter: (localStorage.getItem("reactFactorialTest_filter") || ''),
-                   showCompsOnly: false,
-                   showFlagsOnly: false,
-                   smallMode: this.props.smallMode
-                 };
+      filter: (localStorage.getItem("reactFactorialTest_filter"+this.id) || ''),
+      smallMode:(localStorage.getItem('reactFactorialTest_smallMode'+this.id) || this.props.smallMode || ''),
+      showCompsOnly: false,
+      showFlagsOnly: false,
+    };
   }
 
   // Flattens a JSON hierarchy to prepare for test discovery and multiplication.
@@ -105,16 +109,18 @@ export default class MultiTest extends React.Component {
   // show only the given test name.
   // save the information to a window variable so that it will survive reloading the page due the tested code being updated.
   setFilter(filterVal){
-    localStorage.setItem('reactFactorialTest_filter',filterVal);
-    localStorage.setItem('reactFactorialTest_compsOnly',''); // emptry string for false because local storage works on strings.
-    localStorage.setItem('reactFactorialTest_flagsOnly','');
+    localStorage.setItem('reactFactorialTest_filter'+this.id,filterVal);
+    localStorage.setItem('reactFactorialTest_compsOnly'+this.id,''); // emptry string for false because local storage works on strings.
+    localStorage.setItem('reactFactorialTest_flagsOnly'+this.id,'');
     this.setState({ filter: filterVal, showCompsOnly: '', showFlagsOnly: ''});
   }
 
   goSmall() {
+    localStorage.setItem('reactFactorialTest_smallMode'+this.id,'T'),    
     this.setState({ smallMode: true });
   }
   goBig() {
+    localStorage.setItem('reactFactorialTest_smallMode'+this.id,''),    
     this.setState({ smallMode: false });
   }
   
@@ -122,18 +128,18 @@ export default class MultiTest extends React.Component {
   // toggle wether the system is showing all tests or just the comparison tests.
   // save the information to a window variable so that it will survive reloading the page due the tested code being updated.
   toggleCompVisible(){
-    var showCompsOnly = localStorage.getItem('reactFactorialTest_compsOnly') || '';
+    var showCompsOnly = localStorage.getItem('reactFactorialTest_compsOnly'+this.id) || '';
     var compsOnly = ('' === showCompsOnly) ? 'T' : ''; // rigmaroll so I can store in local storage.
-    localStorage.setItem('reactFactorialTest_compsOnly',compsOnly);
+    localStorage.setItem('reactFactorialTest_compsOnly'+this.id,compsOnly);
     this.setState({ showCompsOnly: compsOnly });
   }
 
   // toggle wether the system is showing all tests or just the flagged tests.
   // save the information to a window variable so that it will survive reloading the page due the tested code being updated.
   toggleFlagVisible() {
-    var showFlagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly')||'';
+    var showFlagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly'+this.id)||'';
     var flagsOnly = ('' === showFlagsOnly) ? 'T' : ''; // rigmaroll so I can store in local storage.
-    localStorage.setItem('reactFactorialTest_flagsOnly',flagsOnly);
+    localStorage.setItem('reactFactorialTest_flagsOnly'+this.id,flagsOnly);
     this.setState({ showFlagsOnly: flagsOnly });
   }
   
@@ -166,12 +172,14 @@ export default class MultiTest extends React.Component {
       }
     }
 
-    var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter') || '';
-    var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly') || ''; // empty string implies false.
-    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList')) || [];
-    var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly') || '';
-    var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList')) || [];    
+    var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter'+this.id) || '';
+    var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly'+this.id) || ''; // empty string implies false.
+    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'+this.id)) || [];
+    var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly'+this.id) || '';
+    var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList'+this.id)) || [];    
+    var reactFactorialTest_smallMode = localStorage.getItem('reactFactorialTest_smallMode'+this.id) || this.props.smallMode || '';    
     
+    var visibleTestCount=0;
 
     //===== FILTERING PHASE =====
     var renderList = allWork.map((item, index) => {
@@ -203,7 +211,8 @@ export default class MultiTest extends React.Component {
              -1 !== reactFactorialTest_flagList.indexOf(holdName))
          )          
       ){
-        return <TestItem key={index} index={index} item={item} target={this.props.target} smallMode={this.state.smallMode}
+        visibleTestCount++;
+        return <TestItem key={index} index={index} item={item} target={this.props.target} smallMode={this.state.smallMode} id={this.id}
                   focusToggle={() => this.setFilter(holdName)}
                 />
       }
@@ -212,13 +221,15 @@ export default class MultiTest extends React.Component {
     var unFocusButton='';
     var unCompareButton = '';    
     var unFlagButton = '';
+
     if (reactFactorialTest_filter || reactFactorialTest_compsOnly || reactFactorialTest_flagsOnly ) {
       unFocusButton = 
         <div style={{ display: 'inline-block', padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black' }}
           onClick={() => this.setFilter('')}
           title='UnFocus / Show All Tests'
         >
-        <CloseBox width={18} height={18} /><MagnifyIcon width={18} height={18} /></div>
+        <UnFilter width={18} height={18} />
+        </div>
     }
     else{
       unCompareButton = 
@@ -227,8 +238,9 @@ export default class MultiTest extends React.Component {
         ><MagnifyIcon width={18} height={18} /><SelectYes width={18} height={18} /></div>      
       unFlagButton = 
         <div style={{ display: 'inline-block', padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black' }}
-          onClick={() => this.toggleFlagVisible()} title='Focus On Flagged Tests'
-        ><MagnifyIcon width={18} height={18} /><FlagIcon width={18} height={18} /></div>
+        onClick={() => this.toggleFlagVisible()} title='Focus On Flagged Tests'
+      ><MagnifyIcon width={18} height={18} /><FlagIcon width={18} height={18} /></div>
+        
     }
 
     var goBigButton = <div style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
@@ -242,11 +254,12 @@ export default class MultiTest extends React.Component {
 
 
 
-    if(this.state.smallMode){
+    if(reactFactorialTest_smallMode){
       return(
         <div>
-          {goBigButton}&nbsp;
-          {allWork.length} Tests : mouse over each test for details.<br/>          
+          <div>{allWork.length} Tests {visibleTestCount<allWork.length && <span>({allWork.length-visibleTestCount} filtered out)</span>}</div>
+          <div>Mouse over each test for details. Click above the test to flag for review.</div>
+          <div>{goBigButton}&nbsp;{unFocusButton}&nbsp;{unFlagButton}</div>
           {renderList}          
         </div>
       );
@@ -255,16 +268,18 @@ export default class MultiTest extends React.Component {
     
     return(
       <div style={{height:'99%'}}>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, borderBottom: '3px solid grey', padding: '5px'}}>
-          <div style={{ padding:'5px',fontSize: '2em' , display:'inline-block'  }}>{allWork.length} Tests</div>
-          <div style={{ display: 'inline-block',float:'right' }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 60, borderBottom: '3px solid grey', padding: '5px'}}>
+          <div style={{ paddingTop:'5px',fontSize: '2em'  }}>
+            {allWork.length} Tests {visibleTestCount<allWork.length && <span>({allWork.length-visibleTestCount} filtered out)</span>}
+          </div>
+          <div>
             {unFocusButton}&nbsp;
             {unFlagButton}&nbsp;
             {unCompareButton}&nbsp;
             {goSmallButton}
           </div>
         </div>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 65, bottom: 5, overflow: 'auto',padding: '5px',  }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 73, bottom: 0, overflow: 'auto',padding: '5px',  }}>
           {renderList}
         </div>
       </div>
