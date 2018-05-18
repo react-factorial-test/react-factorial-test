@@ -31,11 +31,11 @@ export default class ParameterItem extends React.Component {
       var curKey = keys[kctr];
       if (curKey.endsWith('Test')){
         results.push( 
-            <ParameterItem data={this.props.data[curKey]}/>
+            <ParameterItem key={kctr} data={this.props.data[curKey]}/>
           );
       }
       else if(curKey!=='tstName' && curKey!=='_rft'){
-        results.push( <ParameterParts data={this.props.data}/> );
+        results.push(<ParameterParts key={kctr} data={this.props.data}/> );
         break;
       }
     }

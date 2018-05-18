@@ -6,6 +6,8 @@ import MultiTest from '../src/multiTest/MultiTest';
 import ParameterDisplay from '../src/multiTest/ParameterDisplay';
 import TestNameTool from '../src/multiTest/TestNameTool';
 
+import IntroPage from '../src/exampleComponentsToTest/IntroPage';
+
 import JSXAddon from 'storybook-addon-jsx';
 import { setOptions } from '@storybook/addon-options';
 setOptions({ name:'react-factorial-test',showAddonPanel:false});
@@ -18,7 +20,7 @@ var smData = TestNameTool(simpleMathParametersRaw); // name each test after it's
 
 
 storiesOf('Introduction', module)
-  .add('What is react-factorial-test?', () => (<div>Intro Page</div>))
+  .add('What is react-factorial-test?', () => (<IntroPage/>))
   .add('How do we define parameter options?', () => (<div>Intro Page</div>))
   .add('How do multiply possible options to make tests?', () => (<div>Intro Page</div>))
   .add('What are the test focus buttons for?', () => (<div>Intro Page</div>))

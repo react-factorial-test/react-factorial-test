@@ -1,6 +1,7 @@
 
 @import url('https://fonts.googleapis.com/css?family=Open+Sans');
 
+
 .GreenRotate{
   background-color: lightgreen !important; 
   transform: rotate(45deg);
@@ -38,9 +39,10 @@
   background: linear-gradient(to bottom, #f0b7a1 0%,#752201 62%,#752201 62%,#8c3310 65%,#8c3310 65%,#bf6e4e 100%); 
  }
 
+
  body{
-  font-family: 'Open Sans', sans-serif;
-  font-size: 12px;
+  font-family: 'Segoe UI','Roboto', sans-serif;
+  font-size: 14px;
  }
 
  .testHeaderCell{background-color:pink;}

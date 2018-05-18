@@ -17,7 +17,7 @@ export default class TestItem extends React.Component {
 
   constructor(props) {
     super(props); autoBind(this);        
-    this.id = '_'+(this.props.id||'');
+    this.id = (this.props.id||'');
     this.state = { pleaseReRender:0 };
   }
 
@@ -74,8 +74,9 @@ export default class TestItem extends React.Component {
     // I don't want that, so I accept the cost that each test must do it's own local storage access. 
     var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter'+this.id) || '';
     var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly'+this.id) || ''; // empty string implies false.
-    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'+this.id)) || [];
     var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly'+this.id) || '';
+
+    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList' + this.id)) || [];
     var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList'+this.id)) || [];    
 
     var reactFactorialTest_note = localStorage.getItem('reactFactorialTest_note_'+holdName+this.id) || '';    
@@ -162,22 +163,24 @@ export default class TestItem extends React.Component {
       return(
       <div key={this.props.index+'item'} style={{borderBottom:'1px solid lightgrey',margin:'5px',paddingBottom:'5px'}}>
         <div style={{minHeight:'50px'}}>
-          <div style={{ display:'inline-block' }}>
-            <div style={{ fontSize: '1.5em' }}>{holdName}</div>            
+          <div >
+            {focusButton}&nbsp;
+            {flagToggle}&nbsp;
+            {includeToggle}&nbsp;
+            <span style={{ fontSize: '1.5em' }}>{holdName}</span><br/>
+
             {alphaStringify(display)}
           </div>
-          <div style={{ display:'inline-block',float:'right',verticalAlign:'top'}}>
-              {focusButton}&nbsp;
-              {flagToggle}&nbsp;
-              {includeToggle}<br/>
-              <input type='text' 
-                value={reactFactorialTest_note} 
-                style={{ paddingTop: '2px' }} 
-                placeholder='notes'
-                onChange={this.onTypeNote}/>
-          </div>
         </div>
-        {this.props.item && React.cloneElement(this.props.target, this.props.item)}
+          {this.props.item && React.cloneElement(this.props.target, this.props.item)}<br />            
+          <span>
+            <input type='text'
+              value={reactFactorialTest_note}
+              style={{ marginTop: '5px' }}
+              placeholder='notes'
+              onChange={this.onTypeNote} />
+          </span>
+
       </div>
       );
     }
