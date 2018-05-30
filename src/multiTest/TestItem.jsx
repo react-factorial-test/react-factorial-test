@@ -159,6 +159,7 @@ export default class TestItem extends React.Component {
           </div>
         );
       }
+<<<<<<< HEAD
       else{
         return(
           <div key={this.props.index+'item'} style={{borderBottom:'1px solid lightgrey',margin:'5px',paddingBottom:'5px'}} 
@@ -184,6 +185,33 @@ export default class TestItem extends React.Component {
           </div>
           );
       }
+=======
+
+      // final rendering of the target with each multiplied parameter set
+      return(
+      <div key={this.props.index+'item'} style={{borderBottom:'1px solid lightgrey',margin:'5px',paddingBottom:'5px'}}>
+        <div style={{minHeight:'50px'}}>
+          <div >
+            {focusButton}&nbsp;
+            {flagToggle}&nbsp;
+            {includeToggle}&nbsp;
+            <span style={{ fontSize: '1.5em' }}>{holdName}</span><br/>
+
+            {alphaStringify(display)}
+          </div>
+        </div>
+          {this.props.item && React.cloneElement(this.props.target, this.props.item)}<br />            
+          <span>
+            <input type='text'
+              value={reactFactorialTest_note}
+              style={{ marginTop: '5px' }}
+              placeholder='notes'
+              onChange={this.onTypeNote} />
+          </span>
+
+      </div>
+      );
+>>>>>>> 20f3d4dbb825fecf357a5325d2d08646e87c3f12
     }
     else{
       // no longer relavant to the current focus list
