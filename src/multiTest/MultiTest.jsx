@@ -151,6 +151,16 @@ export default class MultiTest extends React.Component {
     var testArray = this.props.test;
     if(!testArray){ return(<div>you must specify an array of tests as the test paramter</div>); }
 
+    if('object'!==(typeof this.props.target)){
+      return<div style={{margin:'5px',padding:'5px',backgroundColor:'red',border:'5px dashed black',fontSize:'2em'}}>
+        <b>You have not passed a valid React element for testing.<br/>Instead of an object, you've passed in a function.</b><br/>
+        Most likely you typed something like:<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target=&#123;MyComponent&#125;<br/>
+        Instead, you need to type:<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;target=&#123;&#60;MyComponent/&#62;&#125;<br/>
+        </div>
+    }    
+
     //===== MULTIPLICATION PHASE =====
                                                   // testArray is an array or arrays.  
                                                   // in the outer array, each item is a test to calculate,
@@ -265,7 +275,8 @@ export default class MultiTest extends React.Component {
       );
     }
     
-    
+    // I have considered using a virutal list here, but that removes the ability to performance test a large number of renders.
+    // So far, I've decided to leave it as is.
     return(
       <div style={{height:'99%'}}>
         <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 60, borderBottom: '3px solid grey', padding: '5px'}}>

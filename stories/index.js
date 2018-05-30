@@ -16,6 +16,10 @@ import SimpleMath              from '../src/exampleComponentsToTest/simpleMath/S
 import simpleMathParametersRaw from '../src/exampleComponentsToTest/simpleMath/SimpleMathParameters.jsx';
 var smData = TestNameTool(simpleMathParametersRaw); // name each test after it's variable name.
 
+import LineItem from '../src/exampleComponentsToTest/lineItem/LineItem';
+import LineItemParam from '../src/exampleComponentsToTest/lineItem/LineItemParameters';
+var paramData = TestNameTool(LineItemParam); // name each test after it's variable name.
+
 
 storiesOf('Introduction', module)
   .add('What is react-factorial-test?', () => (<div>Intro Page</div>))
@@ -97,3 +101,20 @@ storiesOf('Example - SimpleMath Component', module)
           ],
         ]}
     />))
+
+    storiesOf('Performance - LineItem Component', module)
+    .add('Show many empty components', () => (
+      <MultiTest
+          id='PerfPageEmpty'
+          target={<div style={{border:'2px solid black',margin:'2px'}}>&nbsp;</div>}
+          test={
+          [ [ paramData.countTest,paramData.costTest,paramData.currencyTest,paramData.limitTest ] ]}
+        />))
+    .add('Show many test components', () => (
+    <MultiTest
+        id='PerfPageComp'
+        target={<LineItem/>}
+        test={
+        [ [ paramData.countTest,paramData.costTest,paramData.currencyTest,paramData.limitTest ] ]}
+      />))
+    

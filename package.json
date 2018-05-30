@@ -33,6 +33,7 @@
   "main": "lib/bundle.js",
   "dependencies": {
     "@storybook/addon-options": "^3.4.3",
+    "accounting": "^0.4.1",
     "json-stable-stringify": "^1.0.1",
     "mdi-react": "^2.1.19",
     "react-autobind": "^1.0.6"
