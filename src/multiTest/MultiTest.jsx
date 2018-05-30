@@ -184,10 +184,11 @@ export default class MultiTest extends React.Component {
 
     var reactFactorialTest_filter = localStorage.getItem('reactFactorialTest_filter'+this.id) || '';
     var reactFactorialTest_compsOnly = localStorage.getItem('reactFactorialTest_compsOnly'+this.id) || ''; // empty string implies false.
-    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList'+this.id)) || [];
     var reactFactorialTest_flagsOnly = localStorage.getItem('reactFactorialTest_flagsOnly'+this.id) || '';
-    var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList'+this.id)) || [];    
-    var reactFactorialTest_smallMode = localStorage.getItem('reactFactorialTest_smallMode'+this.id) || this.props.smallMode || '';    
+    var reactFactorialTest_smallMode = localStorage.getItem('reactFactorialTest_smallMode'+this.id) || '';    
+
+    var reactFactorialTest_compList = JSON.parse(localStorage.getItem('reactFactorialTest_compList' + this.id)) || [];
+    var reactFactorialTest_flagList = JSON.parse(localStorage.getItem('reactFactorialTest_flagList' + this.id)) || [];    
     
     var visibleTestCount=0;
 
@@ -253,11 +254,11 @@ export default class MultiTest extends React.Component {
         
     }
 
-    var goBigButton = <div style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+    var goBigButton = <div key='goBig' id={'reactFactorialTest_goBig' + this.id } style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
       onClick={() => this.goBig()} title='Toggle: One Test Per Line'>
       <GoBig width={18} height={18} />
       </div>
-    var goSmallButton = <div style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
+    var goSmallButton = <div key='goSmall' id={'reactFactorialTest_goSmall'+this.id} style={{ display: 'inline-block', padding: '2px', height: '18px', backgroundColor: 'lightgreen', border: '1px solid black' }}
       onClick={() => this.goSmall()} title='Toggle: Compact Mode'>
       <GoSmall width={18} height={18} />
       </div>
@@ -266,7 +267,7 @@ export default class MultiTest extends React.Component {
 
     if(reactFactorialTest_smallMode){
       return(
-        <div>
+        <div style={{ padding: '5px'}}>
           <div>{allWork.length} Tests {visibleTestCount<allWork.length && <span>({allWork.length-visibleTestCount} filtered out)</span>}</div>
           <div>Mouse over each test for details. Click above the test to flag for review.</div>
           <div>{goBigButton}&nbsp;{unFocusButton}&nbsp;{unFlagButton}</div>
@@ -278,16 +279,16 @@ export default class MultiTest extends React.Component {
     // I have considered using a virutal list here, but that removes the ability to performance test a large number of renders.
     // So far, I've decided to leave it as is.
     return(
-      <div style={{height:'99%'}}>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 60, borderBottom: '3px solid grey', padding: '5px'}}>
-          <div style={{ paddingTop:'5px',fontSize: '2em'  }}>
+      <div style={{padding:'5px'}}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 50, borderBottom: '3px solid grey',padding:'10px'}}>
+          <div style={{ fontSize: '1.5em'  }}>
             {allWork.length} Tests {visibleTestCount<allWork.length && <span>({allWork.length-visibleTestCount} filtered out)</span>}
           </div>
           <div>
+            {goSmallButton}&nbsp;
             {unFocusButton}&nbsp;
             {unFlagButton}&nbsp;
             {unCompareButton}&nbsp;
-            {goSmallButton}
           </div>
         </div>
         <div style={{ position: 'absolute', left: 0, right: 0, top: 73, bottom: 0, overflow: 'auto',padding: '5px',  }}>

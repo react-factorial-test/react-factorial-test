@@ -17,7 +17,7 @@ export default class TestItem extends React.Component {
 
   constructor(props) {
     super(props); autoBind(this);        
-    this.id = '_'+(this.props.id||'');
+    this.id = (this.props.id||'');
     this.state = { pleaseReRender:0 };
     this.renderTools = false;
   }
