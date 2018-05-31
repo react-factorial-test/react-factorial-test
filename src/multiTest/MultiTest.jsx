@@ -10,7 +10,7 @@ import MagnifyIcon from 'mdi-react/MagnifyIcon';
 import SelectNo from 'mdi-react/CheckboxBlankOutlineIcon';
 import SelectYes from 'mdi-react/CheckboxBlankIcon';
 import CloseBox from 'mdi-react/CloseBoxIcon';
-import UnFilter from 'mdi-react/BookmarkRemoveIcon';
+import UnFilter from './buttons/UnFilter';
 
 import GoBig from 'mdi-react/ArrowExpandAllIcon';
 import GoSmall from 'mdi-react/ArrowCollapseAllIcon';
@@ -233,14 +233,20 @@ export default class MultiTest extends React.Component {
     var unCompareButton = '';    
     var unFlagButton = '';
 
-    if (reactFactorialTest_filter || reactFactorialTest_compsOnly || reactFactorialTest_flagsOnly ) {
-      unFocusButton = 
+
+/*
+
         <div style={{ display: 'inline-block', padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black' }}
           onClick={() => this.setFilter('')}
           title='UnFocus / Show All Tests'
         >
         <UnFilter width={18} height={18} />
         </div>
+*/
+
+
+    if (reactFactorialTest_filter || reactFactorialTest_compsOnly || reactFactorialTest_flagsOnly ) {
+      unFocusButton = <UnFilter onClick={() => this.setFilter('')} title='UnFocus / Show All Tests'/>
     }
     else{
       unCompareButton = 
