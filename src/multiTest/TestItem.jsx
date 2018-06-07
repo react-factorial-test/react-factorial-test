@@ -12,7 +12,7 @@ import CloseBox from 'mdi-react/CloseBoxIcon';
 
 
 // Given a set of parameters and rules for multiplying those objects togeter, generate 
-// TODO: PropTypes
+// TODO:PropTypes
 export default class TestItem extends React.Component {
 
   constructor(props) {
@@ -39,16 +39,16 @@ export default class TestItem extends React.Component {
     }
     localStorage.setItem('reactFactorialTest_compList'+this.id, JSON.stringify(compList));
     // real state is in local session.  This just tells react to wake up and render me again.
-    this.setState({ pleaseReRender: this.state.pleaseReRender++ });
+    this.setState({ pleaseReRender:this.state.pleaseReRender++ });
   }
 
   showTools(){
     this.renderTools=true;
-    this.setState({ pleaseReRender: this.state.pleaseReRender++ });
+    this.setState({ pleaseReRender:this.state.pleaseReRender++ });
   }
   hideTools(){
     this.renderTools=false;
-    this.setState({ pleaseReRender: this.state.pleaseReRender++ });
+    this.setState({ pleaseReRender:this.state.pleaseReRender++ });
   }
 
 
@@ -67,13 +67,13 @@ export default class TestItem extends React.Component {
       localStorage.setItem('reactFactorialTest_note_' + testName+this.id, '');          
     }
     localStorage.setItem('reactFactorialTest_flagList'+this.id, JSON.stringify(flagList));
-    this.setState({ pleaseReRender: this.state.pleaseReRender++ });
+    this.setState({ pleaseReRender:this.state.pleaseReRender++ });
   }  
 
   onTypeNote(evt){
     var holdName = this.props.item.tstName; 
     localStorage.setItem('reactFactorialTest_note_' + holdName+this.id,evt.target.value);    
-    this.setState({ pleaseReRender: this.state.pleaseReRender++ });
+    this.setState({ pleaseReRender:this.state.pleaseReRender++ });
   }
   
 
@@ -105,17 +105,17 @@ export default class TestItem extends React.Component {
     
     if (this.renderTools){
       // only show the focus button if everything is being rendered
-      focusButton = <div style={{ padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black',width:20,display:'inline-block' }}
+      focusButton = <div style={{ padding:'2px', height:'18px',backgroundColor:'lightgreen', border:'1px solid black',width:20,display:'inline-block' }}
                           onClick={this.props.focusToggle}
                           title='Show only this test'
       ><MagnifyIcon width={18} height={18}/></div>
 
-      includeToggle = <div style={{ padding: '2px', height: '18px',backgroundColor: 'lightgreen', border: '1px solid black', width: 20, display: 'inline-block' }}
+      includeToggle = <div style={{ padding:'2px', height:'18px',backgroundColor:'lightgreen', border:'1px solid black', width:20, display:'inline-block' }}
                           onClick={() => this.toggleComp(holdName)}
                           title='Include test for comparisons'
-      >{isInCompList ? <SelectYes width={18} height={18} /> : <SelectNo width={18} height={18}/>}</div>
+      >{isInCompList ? <SelectYes width={18} height={18} /> :<SelectNo width={18} height={18}/>}</div>
 
-      flagToggle = <div style={{ padding: '2px', height: '18px',backgroundColor: isFlagged ? 'crimson' : 'lightgreen', border: '1px solid black', width: 20, display: 'inline-block' }}
+      flagToggle = <div style={{ padding:'2px', height:'18px',backgroundColor:isFlagged ? 'crimson' :'lightgreen', border:'1px solid black', width:20, display:'inline-block' }}
                           onClick={() => this.toggleFlag(holdName)}
                           title='Flag test for review'
                         >{<FlagIcon width={18} height={18}/>}</div>
@@ -151,7 +151,7 @@ export default class TestItem extends React.Component {
       if(reactFactorialTest_smallMode){
         return (
           <div key={this.props.index + 'item'} 
-                style={{ display: 'inline-block' }} title={holdName + '\n' + alphaStringify(display)}>
+                style={{ display:'inline-block' }} title={holdName + '\n' + alphaStringify(display)}>
                 <div title='click here to toggle flagged status' style={{fontSize:'.75em',color:'red',cursor:'pointer'}}
                   onClick={() => this.toggleFlag(holdName)}
                 >&nbsp;{isFlagged && 'flagged'}</div>
@@ -164,9 +164,9 @@ export default class TestItem extends React.Component {
           <div key={this.props.index+'item'} style={{borderBottom:'1px solid lightgrey',margin:'5px',paddingBottom:'5px'}} 
                 onMouseEnter={this.showTools} onMouseLeave={this.hideTools} >
             <div style={{minHeight:'50px'}}>
-              <div style={{ display:'inline-block', }}>
+              <div style={{ display:'inline-block',maxWidth:'80%' }}>
                 <b>{holdName}</b>&nbsp;{isFlagged && '🏴'}&nbsp;{isInCompList && '⬛'}<br/>
-                {alphaStringify(display)}
+                {alphaStringify(display).split(',').join(', ') /* so text will wrap */}
               </div>
               {this.renderTools && <div style={{ display:'inline-block',float:'right',verticalAlign:'top'}}>
                   {focusButton}&nbsp;
@@ -174,7 +174,7 @@ export default class TestItem extends React.Component {
                   {includeToggle}<br/>
                   <input type='text' 
                     value={reactFactorialTest_note} 
-                    style={{ paddingTop: '2px' }} 
+                    style={{ paddingTop:'2px' }} 
                     placeholder='notes'
                     onChange={this.onTypeNote}/>
               </div>
